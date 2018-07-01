@@ -10,14 +10,30 @@ import UIKit
 
 //MARK: - star rating view renderer protocol
 public protocol P2MSStarRatingViewRenderer: class {
-    func renderSelected(context: CGContext, inRect: CGRect)
-    func renderNormal(context: CGContext, inRect: CGRect)
+    //index is added to allow the custom renderer to have different images for different indexes
+    func renderSelected(context: CGContext, inRect: CGRect, index: Int)
+    func renderNormal(context: CGContext, inRect: CGRect, index: Int)
 }
 
 //MARK: - default implementation of star rating view renderer
 public class P2MSDefaultStarRenderer: P2MSStarRatingViewRenderer {
     var baseColor = UIColor.lightGray
     var selectedColor = UIColor.red
+    
+    private var cachedSelectedImage: UIImage?
+    private var prevSize: CGSize = .zero //assumed that all stars will be the same size
+    private var cachedNormalImage: UIImage?
+    
+    private func getStarImage(size: CGSize, color: UIColor) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        guard let contextRef = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        drawStar(context: contextRef, rect: CGRect(x: 0, y: 0, width: size.width, height: size.height), color: color)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext();
+        return image
+    }
     
     //make one star in rect filled with the color
     private func drawStar(context: CGContext, rect: CGRect, color: UIColor) {
@@ -41,12 +57,30 @@ public class P2MSDefaultStarRenderer: P2MSStarRatingViewRenderer {
         context.fillPath()
     }
     
-    public func renderSelected(context: CGContext, inRect: CGRect) {
-        drawStar(context: context, rect: inRect, color: selectedColor)
+    public func renderSelected(context: CGContext, inRect: CGRect, index: Int) {
+        if inRect.size == prevSize, let selectedImage = cachedSelectedImage {
+            selectedImage.draw(in: inRect)
+        }else if let newImage = getStarImage(size: inRect.size, color: selectedColor){
+            newImage.draw(in: inRect)
+            cachedSelectedImage = newImage
+            prevSize = inRect.size
+        }else{
+            drawStar(context: context, rect: inRect, color: selectedColor)
+            cachedSelectedImage = nil
+        }
     }
     
-    public func renderNormal(context: CGContext, inRect: CGRect) {
-        drawStar(context: context, rect: inRect, color: baseColor)
+    public func renderNormal(context: CGContext, inRect: CGRect, index: Int) {
+        if inRect.size == prevSize, let normalImage = cachedNormalImage {
+            normalImage.draw(in: inRect)
+        }else if let newImage = getStarImage(size: inRect.size, color: baseColor){
+            newImage.draw(in: inRect)
+            cachedNormalImage = newImage
+            prevSize = inRect.size
+        }else{
+            drawStar(context: context, rect: inRect, color: baseColor)
+            cachedNormalImage = nil
+        }
     }
 }
 
@@ -62,6 +96,7 @@ public class P2MSStarRatingView: UIView {
     public private(set) var selectedStarCount: Int = 0
     @IBOutlet public weak var delegate: P2MSStarRatingViewDelegate? = nil
     public var gapBetweenStars: CGFloat = 10
+    public var cancelOutsideTouch: Bool = true
     public var contentInsets: UIEdgeInsets = .zero
     public var starRenderer: P2MSStarRatingViewRenderer = P2MSDefaultStarRenderer()
     public var starSize: CGSize? {
@@ -80,6 +115,7 @@ public class P2MSStarRatingView: UIView {
     private var starStartX: CGFloat = 0, starEndX: CGFloat = 0
     private var calculatedStarSize: CGSize = .zero
     private var isStarSizeSet = false
+    private var shouldAllowTouch = false
     
     override public var frame: CGRect {
         didSet{
@@ -105,18 +141,20 @@ public class P2MSStarRatingView: UIView {
     override public func draw(_ rect: CGRect) {
         super.draw(rect)
         if let context = UIGraphicsGetCurrentContext() {
+            UIGraphicsPushContext(context)
             starStartX = (rect.size.width - (CGFloat(noOfStars) * calculatedStarSize.width) - (CGFloat(noOfStars - 1) * gapBetweenStars))/2;
             let starStartY = (rect.size.height - calculatedStarSize.height)/2
             var curRect = CGRect(x: starStartX, y: starStartY, width: calculatedStarSize.width, height: calculatedStarSize.height)
             for index in 1...noOfStars {
                 if index <= selectedStarCount {
-                    starRenderer.renderSelected(context: context, inRect: curRect)
+                    starRenderer.renderSelected(context: context, inRect: curRect, index: index)
                 }else{
-                    starRenderer.renderNormal(context: context, inRect: curRect)
+                    starRenderer.renderNormal(context: context, inRect: curRect, index: index)
                 }
                 curRect.origin.x += calculatedStarSize.width + gapBetweenStars
             }
-            starEndX = curRect.origin.x
+            starEndX = curRect.origin.x //pad gapBetweenStars at the end
+            UIGraphicsPopContext()
         }
     }
     
@@ -132,7 +170,7 @@ public class P2MSStarRatingView: UIView {
         guard let curLoc = location else {
             return
         }
-        if curLoc.x >= starStartX && curLoc.y <= starEndX + gapBetweenStars {
+        if curLoc.x >= starStartX && curLoc.x <= starEndX {
             let curStar = min(Int((curLoc.x - starStartX)/(CGFloat(calculatedStarSize.width)+gapBetweenStars)) + 1, noOfStars)
             starSelected(count: curStar)
         }else if curLoc.x < starStartX {
@@ -145,22 +183,34 @@ public class P2MSStarRatingView: UIView {
     
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
+        shouldAllowTouch = true
         determine(location: touches.first?.location(in: self), done: false)
     }
     
     override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
-        determine(location: touches.first?.location(in: self), done: false)
+        if shouldAllowTouch, let locationInSelf = touches.first?.location(in: self) {
+            determine(location: locationInSelf, done: false)
+            if cancelOutsideTouch && !self.bounds.contains(locationInSelf) {
+                touchesEnded(touches, with: event)
+            }
+        }
     }
     
     override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        determine(location: touches.first?.location(in: self), done: true)
+        if shouldAllowTouch {
+            shouldAllowTouch = false
+            determine(location: touches.first?.location(in: self), done: true)
+        }
     }
     
     override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesCancelled(touches, with: event)
-        determine(location: touches.first?.location(in: self), done: true)
+        if shouldAllowTouch {
+            shouldAllowTouch = false
+            determine(location: touches.first?.location(in: self), done: true)
+        }
     }
 
 }
