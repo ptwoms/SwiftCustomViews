@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		9958F79720E89AF2005BE0D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9958F79620E89AF2005BE0D2 /* AppDelegate.swift */; };
-		9958F79920E89AF2005BE0D2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9958F79820E89AF2005BE0D2 /* ViewController.swift */; };
 		9958F79C20E89AF2005BE0D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9958F79A20E89AF2005BE0D2 /* Main.storyboard */; };
 		9958F79E20E89AF6005BE0D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9958F79D20E89AF6005BE0D2 /* Assets.xcassets */; };
 		9958F7A120E89AF6005BE0D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9958F79F20E89AF6005BE0D2 /* LaunchScreen.storyboard */; };
 		9958F7AC20E89AF6005BE0D2 /* SwiftCustomViewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9958F7AB20E89AF6005BE0D2 /* SwiftCustomViewsTests.swift */; };
 		9958F7B720E89AF6005BE0D2 /* SwiftCustomViewsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9958F7B620E89AF6005BE0D2 /* SwiftCustomViewsUITests.swift */; };
+		9958F7C620E8A3F1005BE0D2 /* P2MSStarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9958F7C520E8A3F1005BE0D2 /* P2MSStarRatingView.swift */; };
+		9958F7CC20E8B34B005BE0D2 /* P2MSStarRatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9958F7CB20E8B34B005BE0D2 /* P2MSStarRatingViewController.swift */; };
+		9958F7CE20E8B36F005BE0D2 /* P2MSSampleBaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9958F7CD20E8B36F005BE0D2 /* P2MSSampleBaseTableViewController.swift */; };
+		9958F7D120E8B4F4005BE0D2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9958F7CF20E8B4F4005BE0D2 /* Localizable.strings */; };
+		9958F7D420E8C0CE005BE0D2 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 9958F7D220E8C0CE005BE0D2 /* Localizable.stringsdict */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +40,6 @@
 /* Begin PBXFileReference section */
 		9958F79320E89AF2005BE0D2 /* SwiftCustomViews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftCustomViews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9958F79620E89AF2005BE0D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9958F79820E89AF2005BE0D2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9958F79B20E89AF2005BE0D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9958F79D20E89AF6005BE0D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9958F7A020E89AF6005BE0D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +50,11 @@
 		9958F7B220E89AF6005BE0D2 /* SwiftCustomViewsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftCustomViewsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9958F7B620E89AF6005BE0D2 /* SwiftCustomViewsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCustomViewsUITests.swift; sourceTree = "<group>"; };
 		9958F7B820E89AF7005BE0D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9958F7C520E8A3F1005BE0D2 /* P2MSStarRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2MSStarRatingView.swift; sourceTree = "<group>"; };
+		9958F7CB20E8B34B005BE0D2 /* P2MSStarRatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2MSStarRatingViewController.swift; sourceTree = "<group>"; };
+		9958F7CD20E8B36F005BE0D2 /* P2MSSampleBaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2MSSampleBaseTableViewController.swift; sourceTree = "<group>"; };
+		9958F7D020E8B4F4005BE0D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9958F7D320E8C0CE005BE0D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = Base; path = Base.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,12 +105,15 @@
 		9958F79520E89AF2005BE0D2 /* SwiftCustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				9958F7C420E8A3DC005BE0D2 /* classes */,
+				9958F7CA20E8B32D005BE0D2 /* samples */,
 				9958F79620E89AF2005BE0D2 /* AppDelegate.swift */,
-				9958F79820E89AF2005BE0D2 /* ViewController.swift */,
 				9958F79A20E89AF2005BE0D2 /* Main.storyboard */,
 				9958F79D20E89AF6005BE0D2 /* Assets.xcassets */,
 				9958F79F20E89AF6005BE0D2 /* LaunchScreen.storyboard */,
 				9958F7A220E89AF6005BE0D2 /* Info.plist */,
+				9958F7CF20E8B4F4005BE0D2 /* Localizable.strings */,
+				9958F7D220E8C0CE005BE0D2 /* Localizable.stringsdict */,
 			);
 			path = SwiftCustomViews;
 			sourceTree = "<group>";
@@ -123,6 +134,23 @@
 				9958F7B820E89AF7005BE0D2 /* Info.plist */,
 			);
 			path = SwiftCustomViewsUITests;
+			sourceTree = "<group>";
+		};
+		9958F7C420E8A3DC005BE0D2 /* classes */ = {
+			isa = PBXGroup;
+			children = (
+				9958F7C520E8A3F1005BE0D2 /* P2MSStarRatingView.swift */,
+			);
+			path = classes;
+			sourceTree = "<group>";
+		};
+		9958F7CA20E8B32D005BE0D2 /* samples */ = {
+			isa = PBXGroup;
+			children = (
+				9958F7CD20E8B36F005BE0D2 /* P2MSSampleBaseTableViewController.swift */,
+				9958F7CB20E8B34B005BE0D2 /* P2MSStarRatingViewController.swift */,
+			);
+			path = samples;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,7 +258,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9958F7A120E89AF6005BE0D2 /* LaunchScreen.storyboard in Resources */,
+				9958F7D120E8B4F4005BE0D2 /* Localizable.strings in Resources */,
 				9958F79E20E89AF6005BE0D2 /* Assets.xcassets in Resources */,
+				9958F7D420E8C0CE005BE0D2 /* Localizable.stringsdict in Resources */,
 				9958F79C20E89AF2005BE0D2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,7 +286,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9958F79920E89AF2005BE0D2 /* ViewController.swift in Sources */,
+				9958F7CC20E8B34B005BE0D2 /* P2MSStarRatingViewController.swift in Sources */,
+				9958F7CE20E8B36F005BE0D2 /* P2MSSampleBaseTableViewController.swift in Sources */,
+				9958F7C620E8A3F1005BE0D2 /* P2MSStarRatingView.swift in Sources */,
 				9958F79720E89AF2005BE0D2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -307,6 +339,22 @@
 				9958F7A020E89AF6005BE0D2 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		9958F7CF20E8B4F4005BE0D2 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9958F7D020E8B4F4005BE0D2 /* Base */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		9958F7D220E8C0CE005BE0D2 /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9958F7D320E8C0CE005BE0D2 /* Base */,
+			);
+			name = Localizable.stringsdict;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

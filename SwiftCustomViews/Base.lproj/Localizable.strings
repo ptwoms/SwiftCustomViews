@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  SwiftCustomViews
+
+  Created by Pyae Phyo Myint Soe on 1/7/18.
+  Copyright © 2018 Pyae Phyo Myint Soe. All rights reserved.
+*/
+"samples" = "Samples";
+"star_rating_view" = "Star Rating View";
+"star_rating_inital_top_msg" = "Please rate our service.";
+"rating_thank_you_msg" = "Thank you for rating our service.";
+"no_rating_msg" = "Tap on the stars to rate";
