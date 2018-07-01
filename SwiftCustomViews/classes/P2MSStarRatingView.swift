@@ -116,6 +116,8 @@ public class P2MSStarRatingView: UIView {
     private var calculatedStarSize: CGSize = .zero
     private var isStarSizeSet = false
     private var shouldAllowTouch = false
+    private var ratingChangedClosure: ((_ count: Int) -> Void)?
+    private var ratingDoneClosure: ((_ count: Int) -> Void)?
     
     override public var frame: CGRect {
         didSet{
@@ -129,6 +131,12 @@ public class P2MSStarRatingView: UIView {
             calculateStarSizeIfNeeded()
             setNeedsDisplay()
         }
+    }
+    
+    //beware of retain cycle when using this method
+    public func setListener(ratingChanged: ((_ count: Int) -> Void)?, ratingDone: ((_ count: Int) -> Void)?){
+        self.ratingDoneClosure = ratingDone
+        self.ratingChangedClosure = ratingChanged
     }
     
     private func calculateStarSizeIfNeeded(){
@@ -162,6 +170,7 @@ public class P2MSStarRatingView: UIView {
         if count != selectedStarCount {
             selectedStarCount = count
             delegate?.ratingChanged(count: selectedStarCount)
+            ratingChangedClosure?(selectedStarCount)
             setNeedsDisplay()
         }
     }
@@ -178,6 +187,7 @@ public class P2MSStarRatingView: UIView {
         }
         if done {
             delegate?.ratingDone(count: selectedStarCount)
+            ratingDoneClosure?(selectedStarCount)
         }
     }
     

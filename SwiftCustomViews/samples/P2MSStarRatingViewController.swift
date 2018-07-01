@@ -18,6 +18,15 @@ class P2MSStarRatingViewController: UIViewController {
         super.viewDidLoad()
         topMessage.text = NSLocalizedString("star_rating_inital_top_msg", comment: "")
         ratingChanged(count: 0)
+        starRatingView.setListener(ratingChanged: { [weak self] (count) in
+            self?.ratingInfo.text = String.localizedStringWithFormat(NSLocalizedString("rating_count_template", comment: ""), count)
+        }) { [weak self] (count) in
+            if count == 0 {
+                self?.topMessage.text = NSLocalizedString("star_rating_inital_top_msg", comment: "")
+            }else{
+                self?.topMessage.text = NSLocalizedString("rating_thank_you_msg", comment: "")
+            }
+        }
         // Do any additional setup after loading the view.
     }
 
@@ -25,19 +34,14 @@ class P2MSStarRatingViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 }
 
+//alertnative way to setListener
 extension P2MSStarRatingViewController: P2MSStarRatingViewDelegate{
     func ratingChanged(count: Int) {
-        ratingInfo.text = String.localizedStringWithFormat(NSLocalizedString("rating_count_template", comment: ""), count)
     }
     
     func ratingDone(count: Int) {
-        if count == 0 {
-            topMessage.text = NSLocalizedString("star_rating_inital_top_msg", comment: "")
-        }else{
-            topMessage.text = NSLocalizedString("rating_thank_you_msg", comment: "")
-        }
+        
     }
 }
