@@ -96,7 +96,7 @@ public class P2MSStarRatingView: UIView {
     public private(set) var selectedStarCount: Int = 0
     @IBOutlet public weak var delegate: P2MSStarRatingViewDelegate? = nil
     public var gapBetweenStars: CGFloat = 10
-    public var cancelOutsideTouch: Bool = true
+    public var cancelOutsideTouch: Bool = false
     public var contentInsets: UIEdgeInsets = .zero
     public var starRenderer: P2MSStarRatingViewRenderer = P2MSDefaultStarRenderer()
     public var starSize: CGSize? {
@@ -200,8 +200,9 @@ public class P2MSStarRatingView: UIView {
     override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
         if shouldAllowTouch, let locationInSelf = touches.first?.location(in: self) {
-            determine(location: locationInSelf, done: false)
-            if cancelOutsideTouch && !self.bounds.contains(locationInSelf) {
+            if self.bounds.contains(locationInSelf) {
+                determine(location: locationInSelf, done: false)
+            }else if cancelOutsideTouch {
                 touchesEnded(touches, with: event)
             }
         }
@@ -222,5 +223,4 @@ public class P2MSStarRatingView: UIView {
             determine(location: touches.first?.location(in: self), done: true)
         }
     }
-
 }
